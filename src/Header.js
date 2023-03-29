@@ -8,7 +8,7 @@ import {
     Button
 } from "react-bootstrap";
 
-import logo from "./logo192.png";
+import logo from "./7.jpg";
 
 export default class Header extends Component {
     render() {
