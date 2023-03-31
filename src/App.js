@@ -4,13 +4,13 @@ import './App.css';
 import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header.js';
-
+import CarouselBoxHk from ".//Components/CarouselBoxHk";
 class App extends React.Component {
     render() {
         return (
             <div>
                 <Header />
-                {/* другой код */}
+                <CarouselBoxHk/>
             </div>
         );
     }
