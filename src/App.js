@@ -3,14 +3,17 @@ import logo from './logo.svg';
 import './App.css';
 import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './Header.js';
 
-function App() {
-  return (
-      <div>
-        <h1> Hello</h1>
-        <Button variant="primary">Button</Button>
-      </div>
-  );
+class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Header />
+                {/* другой код */}
+            </div>
+        );
+    }
 }
 
 export default App;
