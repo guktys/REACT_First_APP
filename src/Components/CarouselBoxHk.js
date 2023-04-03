@@ -1,6 +1,6 @@
 import {Carousel} from "react-bootstrap";
-import MushroomsImg from '../assets/pexels-valeria-november-16146373.jpg';
-import OceanImg from '../assets/pexels-valeria-november-16074293.jpg';
+import MushroomsImg from '../assets/slide1.jpg';
+import OceanImg from '../assets/slide2.jpg';
 import FieldImg from '../assets/pexels-cottonbro-studio-3585017.jpg';
 import {Component} from "react";
 
