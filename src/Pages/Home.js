@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Card, CardImg, Container} from "react-bootstrap";
+import {Button, Card, CardImg, Container,  Navbar,
+    Nav,
+    FormControl,
+    Form,
+    Modal} from "react-bootstrap";
 import CarouselBoxHk from "../Components/CarouselBoxHk";
+
+
 class Home extends Component {
     render() {
         return (
