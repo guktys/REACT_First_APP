@@ -1,0 +1,21 @@
+section.mb-4 {
+    margin-top: 85px;
+}
+#contact-form {
+    margin-left: 447px;
+}
+.text-center.text-md-left {
+    margin-left: 510px;
+}
+#test{
+    width: 40%  !important;
+}
+.box {
+    display: flex;
+    align-items: stretch;
+}
+#test_1{
+    margin-top: 71px;
+    margin-bottom: 1rem;
+    margin-left: 21px;
+}
