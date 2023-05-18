@@ -5,7 +5,7 @@ import second_post from '../assets/pexels-si-luan-pham-8778442.jpg';
 import third_post from '../assets/pexels-valeria-november-16146373.jpg';
 import {data_post1} from './Post1';
 import {post1} from './Post1.js';
-import {data_post2} from './Post2';
+
 import {post2} from './Post2.js';
 import {data_post3} from './Post3';
 import {post3} from './Post3.js';
