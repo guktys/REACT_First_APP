@@ -1,3 +1,9 @@
 .Posts {
     display: flex;
 }
+.No_sort {
+    display: flex;
+}
+.Reverse_sort {
+    display: flex;
+}
