@@ -4,7 +4,7 @@ import third_post from "../assets/pexels-valeria-november-16146373.jpg";
 export const data_post3="05.05.2023";
 export const post3 = [{id: '05.05.2023', title: 'Third post', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ipsum vel\\n" +\n' +
         '    "                                    massa suscipit, vel convallis augue maximus. Vivamus id risus consequat, molestie\\n" +\n' +
-        '    "                                    lacus at, ultrices velit. Fusce bibendum justo non dui vestibulum consectetur.',url:'/Post3',image:'pexels-valeria-november-16146373.jpg'}]
+        '    "                                    lacus at, ultrices velit. Fusce bibendum justo non dui vestibulum consectetur.',url:'/Post3',image:'pexels-valeria-november-16146373.jpg',stars:'2'}]
 class Post3 extends Component {
     render() {
         return(

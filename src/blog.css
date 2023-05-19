@@ -12,3 +12,10 @@
     justify-content: center;
     display: flex;
 }
+.widget-svg {
+    width: 20px !important;
+    height: 20px;
+}
+.star-ratings {
+    margin-top: -50px;
+}

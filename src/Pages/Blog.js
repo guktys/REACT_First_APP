@@ -9,7 +9,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../blog.css';
-
+import StarRatings from 'react-star-ratings';
 class Blog extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +21,10 @@ class Blog extends Component {
             isSorted: false,
             isSortedReverse: false,
         };
+
+
     }
+
 
     dataArray() {
         let posts = [];
@@ -83,6 +86,12 @@ class Blog extends Component {
                                 <div className="flex-grow-1 ms-3">
                                     <h5>{post.title}</h5>
                                     <p>{post.id}</p>
+                                    <StarRatings
+                                        rating={parseFloat(post.stars)} // Преобразование в число, если необходимо
+                                        starRatedColor="blue"
+                                        numberOfStars={4}
+                                        name="rating"
+                                    />
                                 </div>
                             </div>
                         </Nav.Link>
@@ -144,6 +153,7 @@ class Blog extends Component {
                                 />
                             </Pagination>
                         </div>
+
                     </Col>
                     <Col md="3">
                         <h5 className="text-center mt-5">Категорії</h5>
