@@ -1,20 +1,22 @@
-import React, {Component} from 'react';
-import {Container, Col, Row, Card, ListGroup, Nav, NavItem, Button} from 'react-bootstrap';
-import first_post from '../assets/pexels-alina-vilchenko-2698519.jpg';
-import second_post from '../assets/pexels-si-luan-pham-8778442.jpg';
-import third_post from '../assets/pexels-valeria-november-16146373.jpg';
-import {data_post1} from './Post1';
-import {post1} from './Post1.js';
-
-import {post2} from './Post2.js';
-import {data_post3} from './Post3';
-import {post3} from './Post3.js';
+import React, { Component } from 'react';
+import { Container, Col, Row, Card, ListGroup, Nav, NavItem, Button } from 'react-bootstrap';
+import { data_post1 } from './Post1';
+import { post1 } from './Post1.js';
+import { post2 } from './Post2.js';
+import { data_post3 } from './Post3';
+import { post3 } from './Post3.js';
+import Pagination from 'react-bootstrap/Pagination';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import '../blog.css';
 
 class Blog extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            posts: [],
+            currentPage: 1,
+            postsPerPage: 10,
             sortedPosts: null,
             isSorted: false,
             isSortedReverse: false,
@@ -29,8 +31,15 @@ class Blog extends Component {
         return posts;
     }
 
+    componentDidMount() {
+        const allPosts = this.dataArray();
+        this.setState({ posts: allPosts });
+    }
+
     dataSort() {
-        let sortedPosts = this.dataArray()
+        const { posts } = this.state;
+
+        let sortedPosts = posts
             .flat()
             .sort(
                 (a, b) =>
@@ -38,12 +47,13 @@ class Blog extends Component {
                     new Date(a.id.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1'))
             );
 
-        this.setState({sortedPosts, isSorted: true, isSortedReverse: false});
-
+        this.setState({ sortedPosts, isSorted: true, isSortedReverse: false });
     }
 
     dataSortAnother() {
-        let sortedPosts = this.dataArray()
+        const { posts } = this.state;
+
+        let sortedPosts = posts
             .flat()
             .sort(
                 (a, b) =>
@@ -51,9 +61,13 @@ class Blog extends Component {
                     new Date(b.id.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1'))
             );
 
-        this.setState({sortedPosts, isSorted: false, isSortedReverse: true});
+        this.setState({ sortedPosts, isSorted: false, isSortedReverse: true });
         console.log(sortedPosts);
     }
+
+    handlePageChange = (pageNumber) => {
+        this.setState({ currentPage: pageNumber });
+    };
 
     dataContainer(array) {
         const mappedPosts = array.flat().map((post, index) => {
@@ -62,10 +76,10 @@ class Blog extends Component {
             return (
                 <div key={index} className="d-flex align-items-center me-5">
                     <NavItem>
-                        <Nav.Link href={post.url} style={{color: 'black'}}>
+                        <Nav.Link href={post.url} style={{ color: 'black' }}>
                             <div className="flex-shrink-0">
                                 <div source={img}></div>
-                                <img width={150} height={150} className="mr-3" src={img} alt="photo"/>
+                                <img width={150} height={150} className="mr-3" src={img} alt="photo" />
                                 <div className="flex-grow-1 ms-3">
                                     <h5>{post.title}</h5>
                                     <p>{post.id}</p>
@@ -81,15 +95,21 @@ class Blog extends Component {
     }
 
     render() {
-        const {sortedPosts, isSorted, isSortedReverse} = this.state;
+        const { posts, currentPage, postsPerPage } = this.state;
+        const { sortedPosts, isSorted, isSortedReverse } = this.state;
         const no_sort = this.dataContainer(this.dataArray());
+
         return (
             <div className="temp">
                 <Row>
                     <Col md="9">
                         <div className="Posts">
-                            <Button className="Top" onClick={() => this.dataSort()}>↑</Button>
-                            <Button className="Down" onClick={() => this.dataSortAnother()}>↓</Button>
+                            <Button className="Top" onClick={() => this.dataSort()}>
+                                ↑
+                            </Button>
+                            <Button className="Down" onClick={() => this.dataSortAnother()}>
+                                ↓
+                            </Button>
                             {isSorted && !isSortedReverse && sortedPosts && sortedPosts.length > 0 ? (
                                 this.dataContainer(sortedPosts)
                             ) : isSortedReverse && sortedPosts && sortedPosts.length > 0 ? (
@@ -97,6 +117,32 @@ class Blog extends Component {
                             ) : (
                                 <div className="No_sort">{no_sort}</div>
                             )}
+                        </div>
+                        <div className="Pagination">
+                            <Pagination>
+                                {/* Добавьте компоненты для отображения пагинации */}
+                                <Pagination.First onClick={() => this.handlePageChange(1)} />
+                                <Pagination.Prev
+                                    onClick={() => this.handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                />
+                                {[...Array(Math.ceil(posts.length / postsPerPage)).keys()].map((number) => (
+                                    <Pagination.Item
+                                        key={number + 1}
+                                        active={number + 1 === currentPage}
+                                        onClick={() => this.handlePageChange(number + 1)}
+                                    >
+                                        {number + 1}
+                                    </Pagination.Item>
+                                ))}
+                                <Pagination.Next
+                                    onClick={() => this.handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === Math.ceil(posts.length / postsPerPage)}
+                                />
+                                <Pagination.Last
+                                    onClick={() => this.handlePageChange(Math.ceil(posts.length / postsPerPage))}
+                                />
+                            </Pagination>
                         </div>
                     </Col>
                     <Col md="3">

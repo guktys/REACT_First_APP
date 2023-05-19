@@ -7,3 +7,8 @@
 .Reverse_sort {
     display: flex;
 }
+
+.Pagination {
+    justify-content: center;
+    display: flex;
+}
