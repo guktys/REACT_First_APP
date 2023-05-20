@@ -1,21 +1,27 @@
-import React from "react";
-import logo from './logo.svg';
-import './App.css';
+// App.js
+
+import React, {Component} from "react";
 import { Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header.js';
 
-class App extends React.Component {
+class App extends Component {
+
+    componentDidMount() {
+
+
+    }
+
     render() {
+
         return (
             <>
                 <div>
                     <Header />
-
                 </div>
 
             </>
-                    );
+        );
     }
 }
 
