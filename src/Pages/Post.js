@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import {Container, Col, Row, Card, ListGroup,Nav, NavItem} from "react-bootstrap";
+import {Container, Col, Row, Card, ListGroup, Nav, NavItem, Modal, Button} from "react-bootstrap";
 import first_post from "../assets/pexels-alina-vilchenko-2698519.jpg";
 import StarRatings from 'react-star-ratings';
 import { useParams} from 'react-router-dom';
@@ -11,10 +11,12 @@ const Post = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
+    const [selectedComment, setSelectedComment] = useState(null);
     const [newCommentAuthor, setNewCommentAuthor] = useState('');
     const [newCommentContent, setNewCommentContent] = useState('');
     const [newCommentTitle, setNewCommentTitle] = useState('');
+    const [showModal, setShowModal] = useState(false); // Состояние для отображения/скрытия модального окна
+
     useEffect(() => {
 if(post_id){
     fetch(`http://localhost:3001/posts/${post_id}`)
@@ -75,6 +77,58 @@ if(post_id){
 
         return mappedPosts;
     };
+    const deleteComm = (commID) => {
+        fetch('http://localhost:3001/deleteComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: commID }), // Обернуть commID в объект
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Обработка успешного ответа от сервера
+                console.log('Comment delete:', data);
+                window.location.reload(); // Перезагрузка страницы
+            })
+            .catch((error) => {
+                // Обработка ошибки
+                console.error('Error:', error);
+            });
+    };
+    const showChange = (comm_id) =>{
+        let comment = comments.find((comment) => comment.id === comm_id);
+        setSelectedComment(comment);
+        setShowModal(true);
+
+    }
+    const changeComm = (b) =>{
+        b.preventDefault();
+        const comment1 = {
+            author: newCommentAuthor,
+            title: newCommentTitle,
+            content: newCommentContent,
+            comm_id: selectedComment.id,
+        };
+        fetch('http://localhost:3001/updateComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(comment1),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Обработка успешного ответа от сервера
+                console.log('Comment update:', data);
+                window.location.reload(); // Перезагрузка страницы
+            })
+            .catch((error) => {
+                // Обработка ошибки
+                console.error('Error:', error);
+            });
+
+    }
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         const comment = {
@@ -118,7 +172,10 @@ if(post_id){
                                     <br />
                                     <span className="Text">{comment.text}</span>
                                 </p>
+                                <button className="btn btn-primary" onClick={() => deleteComm(comment.id)}>Удалить коммент</button>
+                                <button className="btn btn-primary Modal"  onClick={() => showChange(comment.id)}>Редактировать комментарий</button>
                             </div>
+
                         ))
                     ) : (
                         <p className="NoComments">Вибачте, поки що коментарів не має</p>
@@ -156,6 +213,47 @@ if(post_id){
                             Отправить
                         </button>
                     </Form>
+
+
+
+                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Редактировать комментарий</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={changeComm}>
+                                <Form.Group className="mb-3" controlId="commentFormTitle">
+                                    <Form.Label>Заголовок комментария</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Заголовок"
+                                        defaultValue={selectedComment ? selectedComment.title : ''}
+                                        onChange={(e) => setNewCommentTitle(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="commentFormContent">
+                                    <Form.Label>Ваш комментарий</Form.Label>
+                                    <Form.Control
+                                        as="textarea"
+                                        rows={3}
+                                        defaultValue={selectedComment ? selectedComment.text : ''}
+                                        onChange={(e) => setNewCommentContent(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                                        Закрыть
+                                    </Button>
+                                    <Button variant="primary"   type="submit">
+                                        Сохранить изменения
+                                    </Button>
+                                </Modal.Footer>
+                            </Form>
+                        </Modal.Body>
+                    </Modal>
+
+
+
                 </div>
             </Container>
         );

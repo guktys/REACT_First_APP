@@ -86,8 +86,38 @@ app.post('/addComment', (req, res) => {
         }
     });
 });
+app.post('/deleteComment', (req, res) => {
+// Извлекаем данные из тела запроса
+    const { id } = req.body;
+    const query = `DELETE FROM comment WHERE id = ${id}`;
 
+// Выполняем запрос
+    con.query(query, function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to delete comment' });
+        } else {
+            res.json({ message: 'Comment deleted successfully' });
+        }
+    });
+});
 
+app.post('/updateComment', (req, res) => {
+    // Извлекаем данные из тела запроса
+    const { author, content, comm_id, title } = req.body;
+
+    const query = "UPDATE `comment` SET `title` = ?, `text` = ? WHERE `id` = ?";
+
+    // Выполняем запрос с использованием параметров
+    con.query(query, [title, content, comm_id], function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to update comment' });
+        } else {
+            res.json({ message: 'Comment updated successfully' });
+        }
+    });
+});
 
 app.get('/kategoris', (req, res) => {
     const query = "SELECT DISTINCT name FROM kategoria";
