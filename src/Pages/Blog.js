@@ -91,25 +91,24 @@ const Blog = () => {
                 return (
                     <div key={index} className="d-flex align-items-center me-5">
                         <NavItem>
-                            <Nav.Link href={post.url} style={{ color: 'black' }}>
+                            <Link to={`/Post/${post.id}`} style={{ color: 'black', textDecoration: 'none' }}>
                                 <div className="flex-shrink-0">
                                     <img width={150} height={150} className="mr-3 IMG" src={img} alt="photo" />
                                     <div className="flex-grow-1 ms-3">
                                         <h5>{post.title}</h5>
                                         <p>{post.data}</p>
-                                        <Link to={`/Category/:${post.kategoria}`} style={{ textDecoration: 'none' }}>
+                                        <Link to={`/Category/${post.kategoria}`} style={{ textDecoration: 'none' }}>
                                             <p className="category">#{post.kategoria}</p>
                                         </Link>
-
                                         <StarRatings
-                                            rating={parseFloat(post.stars)} // Преобразование в число, если необходимо
+                                            rating={parseFloat(post.stars)}
                                             starRatedColor="blue"
                                             numberOfStars={4}
                                             name="rating"
                                         />
                                     </div>
                                 </div>
-                            </Nav.Link>
+                            </Link>
                         </NavItem>
                     </div>
                 );

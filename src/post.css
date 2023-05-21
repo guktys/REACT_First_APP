@@ -1,0 +1,28 @@
+.card {
+    margin-top: 89px;
+}
+.CommentItem {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.Author {
+    font-weight: bold;
+}
+
+.Date {
+    color: #888;
+}
+
+.Text {
+    margin-top: 5px;
+}
+.Comment{
+    margin-top: 15px;
+}
+.NoComments {
+    text-align: center;
+    color: gray;
+}

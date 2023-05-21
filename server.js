@@ -34,6 +34,61 @@ app.get('/posts', (req, res) => {
         }
     });
 });
+app.get('/posts/:postid', (req, res) => {
+    const postId = req.params.postid;
+    const query = `SELECT * FROM posts WHERE id = '${postId}';`;
+
+    con.query(query, function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch posts' });
+        } else {
+            //const post = result[0]; // Получить первый элемент из массива результатов
+            res.json(result);
+        }
+    });
+});
+app.get('/getComm/:postid', (req, res) => {
+    const postId = req.params.postid;
+    const query = `SELECT * FROM  comment  WHERE post  = '${postId}';`;
+
+    con.query(query, function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch posts' });
+        } else {
+            //const post = result[0]; // Получить первый элемент из массива результатов
+            res.json(result);
+        }
+    });
+});
+// Middleware для обработки JSON данных
+app.use(express.json());
+
+// Роут для добавления комментария
+app.post('/addComment', (req, res) => {
+    // Извлекаем данные из тела запроса
+    const { author, content, post,title } = req.body;
+
+    // Создаем текущую дату в нужном формате
+    const currentDate = new Date().toISOString().slice(0, 10);
+
+    // Создаем параметризованный SQL-запрос
+    const query = "INSERT INTO `comment` (`id`, `title`, `text`, `author`, `date`, `post`) VALUES (NULL, ?, ?, ?, ?, ?)";
+
+    // Выполняем запрос с использованием параметров
+    con.query(query, [title, content, author, currentDate, post], function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to add comment' });
+        } else {
+            res.json({ message: 'Comment added successfully' });
+        }
+    });
+});
+
+
+
 app.get('/kategoris', (req, res) => {
     const query = "SELECT DISTINCT name FROM kategoria";
 

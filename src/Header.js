@@ -11,9 +11,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Contacts from "./Pages/Contacts";
 import Blog from "./Pages/Blog.js";
-import Post1 from "./Pages/Post1";
-import Post2 from "./Pages/Post2";
-import Post3 from "./Pages/Post3";
+import Post from "./Pages/Post";
 import Category from "./Pages/Category";
 
 function Header() {
@@ -76,10 +74,8 @@ function Header() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contacts" element={<Contacts />} />
                     <Route path="/blog" element={<Blog />} />
-                    <Route path="/Post1" element={<Post1/>} />
-                    <Route path="/Post2" element={<Post2/>} />
-                    <Route path="/Post3" element={<Post3/>} />
                     <Route path="/Category/:categoryName" element={<Category />} component={Category} />
+                    <Route path="/Post/:post_id" element={<Post />} component={Post} />
                 </Routes>
             </Router>
 
