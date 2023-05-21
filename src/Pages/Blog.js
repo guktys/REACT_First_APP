@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../blog.css';
 import StarRatings from 'react-star-ratings';
+import {Link} from "react-router-dom";
 
 const Blog = () => {
     const [data, setData] = useState(null);
@@ -16,6 +17,7 @@ const Blog = () => {
     const [sortedPosts, setSortedPosts] = useState(null);
     const [isSorted, setIsSorted] = useState(false);
     const [isSortedReverse, setIsSortedReverse] = useState(false);
+    const [kategory,setKategory]=useState(null)
 
 
     useEffect(() => {
@@ -31,17 +33,33 @@ const Blog = () => {
                 setError('Failed to fetch posts');
                 setLoading(false);
             });
-        console.log(posts);
+
+        fetch(`http://localhost:3001/kategoris`)
+            .then((response) => response.json())
+            .then((data) => {
+                setKategory(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                setError('Failed to fetch posts');
+                setLoading(false);
+            });
+        console.log(kategory);
     }, []);
 
     const dataSort = () => {
         let sortedPosts = posts
             .flat()
-            .sort(
-                (a, b) =>
-                    new Date(b.id.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1')) -
-                    new Date(a.id.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1'))
-            );
+            .sort((a, b) => {
+                const aId = a.id && typeof a.id === 'string' ? a.id : '';
+                const bId = b.id && typeof b.id === 'string' ? b.id : '';
+
+                return (
+                    new Date(bId.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1')) -
+                    new Date(aId.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1'))
+                );
+            });
+
         setSortedPosts(sortedPosts);
         setIsSorted(true);
         setIsSortedReverse(false);
@@ -75,11 +93,14 @@ const Blog = () => {
                         <NavItem>
                             <Nav.Link href={post.url} style={{ color: 'black' }}>
                                 <div className="flex-shrink-0">
-                                    <div className="img" source={img}></div>
-                                    <img width={150} height={150} className="mr-3" src={img} alt="photo" />
+                                    <img width={150} height={150} className="mr-3 IMG" src={img} alt="photo" />
                                     <div className="flex-grow-1 ms-3">
                                         <h5>{post.title}</h5>
-                                        <p>{post.id}</p>
+                                        <p>{post.data}</p>
+                                        <Link to={`/Category/:${post.kategoria}`} style={{ textDecoration: 'none' }}>
+                                            <p className="category">#{post.kategoria}</p>
+                                        </Link>
+
                                         <StarRatings
                                             rating={parseFloat(post.stars)} // Преобразование в число, если необходимо
                                             starRatedColor="blue"
@@ -148,13 +169,21 @@ const Blog = () => {
                 <Col md="3">
                     <h5 className="text-center mt-5">Категорії</h5>
                     <Card>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>категорія 1</ListGroup.Item>
-                            <ListGroup.Item>категорія 2</ListGroup.Item>
-                            <ListGroup.Item>категорія 3</ListGroup.Item>
-                            <ListGroup.Item>категорія 4</ListGroup.Item>
-                            <ListGroup.Item>категорія 5</ListGroup.Item>
-                        </ListGroup>
+                        <NavItem>
+
+                            <ListGroup variant="flush">
+                                {kategory && kategory.length > 0 ? (
+                                    kategory.map((category, index) => (
+                                        <ListGroup.Item key={index}>
+                                            <Link to={`/Category/:${category.name}`}>{category.name}</Link>
+                                        </ListGroup.Item>
+                                    ))
+                                ) : (
+                                    <ListGroup.Item>No categories found</ListGroup.Item>
+                                )}
+                            </ListGroup>
+
+                        </NavItem>
                     </Card>
                 </Col>
                 <Card className="mt-3 bg-light">

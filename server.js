@@ -34,7 +34,31 @@ app.get('/posts', (req, res) => {
         }
     });
 });
+app.get('/kategoris', (req, res) => {
+    const query = "SELECT DISTINCT name FROM kategoria";
 
+    con.query(query, function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch categories' });
+        } else {
+            res.json(result);
+        }
+    });
+});
+app.get('/kategoria_select/:name', (req, res) => {
+    const name = req.params.name;
+    const query = `SELECT * FROM posts WHERE kategoria = '${name}';`;
+
+    con.query(query, function (err, result, fields) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch posts' });
+        } else {
+            res.json(result);
+        }
+    });
+});
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

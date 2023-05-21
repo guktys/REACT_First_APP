@@ -14,6 +14,8 @@ import Blog from "./Pages/Blog.js";
 import Post1 from "./Pages/Post1";
 import Post2 from "./Pages/Post2";
 import Post3 from "./Pages/Post3";
+import Category from "./Pages/Category";
+
 function Header() {
     const [show, setShow] = useState(false);
 
@@ -77,6 +79,7 @@ function Header() {
                     <Route path="/Post1" element={<Post1/>} />
                     <Route path="/Post2" element={<Post2/>} />
                     <Route path="/Post3" element={<Post3/>} />
+                    <Route path="/Category/:categoryName" element={<Category />} component={Category} />
                 </Routes>
             </Router>
 
