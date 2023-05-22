@@ -166,7 +166,7 @@ const Blog = () => {
                     </div>
                 </Col>
                 <Col md="3">
-                    <h5 className="text-center mt-5">Категорії</h5>
+                    <h5 className="text-center mt-5">Categories</h5>
                     <Card>
                         <NavItem>
 

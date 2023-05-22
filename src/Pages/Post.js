@@ -172,18 +172,18 @@ if(post_id){
                                     <br />
                                     <span className="Text">{comment.text}</span>
                                 </p>
-                                <button className="btn btn-primary" onClick={() => deleteComm(comment.id)}>Удалить коммент</button>
-                                <button className="btn btn-primary Modal"  onClick={() => showChange(comment.id)}>Редактировать комментарий</button>
+                                <button className="btn btn-primary" onClick={() => deleteComm(comment.id)}>Delete comment</button>
+                                <button className="btn btn-primary Modal"  onClick={() => showChange(comment.id)}>Edit comment</button>
                             </div>
 
                         ))
                     ) : (
-                        <p className="NoComments">Вибачте, поки що коментарів не має</p>
+                        <p className="NoComments">Sorry, there are no comments yet</p>
                     )}
 
                     <Form onSubmit={handleCommentSubmit}>
                         <Form.Group className="mb-3" controlId="commentFormAuthor">
-                            <Form.Label>Ваше имя</Form.Label>
+                            <Form.Label>Your name</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Имя"
@@ -192,7 +192,7 @@ if(post_id){
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="commentFormTitle">
-                            <Form.Label>Заголовок комментария</Form.Label>
+                            <Form.Label>Comment title</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Заголовок"
@@ -201,7 +201,7 @@ if(post_id){
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="commentFormContent">
-                            <Form.Label>Ваш коментарий</Form.Label>
+                            <Form.Label>Your comment</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={3}
@@ -218,12 +218,12 @@ if(post_id){
 
                     <Modal show={showModal} onHide={() => setShowModal(false)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Редактировать комментарий</Modal.Title>
+                            <Modal.Title>Edit comment</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form onSubmit={changeComm}>
                                 <Form.Group className="mb-3" controlId="commentFormTitle">
-                                    <Form.Label>Заголовок комментария</Form.Label>
+                                    <Form.Label>Comment title</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Заголовок"
@@ -232,7 +232,7 @@ if(post_id){
                                     />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="commentFormContent">
-                                    <Form.Label>Ваш комментарий</Form.Label>
+                                    <Form.Label>Your comment</Form.Label>
                                     <Form.Control
                                         as="textarea"
                                         rows={3}
@@ -242,10 +242,10 @@ if(post_id){
                                 </Form.Group>
                                 <Modal.Footer>
                                     <Button variant="secondary" onClick={() => setShowModal(false)}>
-                                        Закрыть
+                                        Close
                                     </Button>
                                     <Button variant="primary"   type="submit">
-                                        Сохранить изменения
+                                        Save
                                     </Button>
                                 </Modal.Footer>
                             </Form>

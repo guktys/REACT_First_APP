@@ -87,7 +87,7 @@ const Category = () => {
     return (
         <div className="select">
             <select value={selectedOption} onChange={handleSelectChange}>
-                <option value="">Выберите опцию</option>
+                <option value="">Select option</option>
                 {kategory.map((category) => (
                     <option key={category.id} value={category.name}>
                         {category.name}
@@ -95,13 +95,13 @@ const Category = () => {
                 ))}
             </select>
 
-            <p>Выбранная опция: {selectedOption}</p>
+            <p>Select option: {selectedOption}</p>
             {loading ? (
                 <div>Loading...</div>
             ) : posts.length > 0 ? (
                 dataContainer(posts)
             ) : (
-                <div className="No_sort">Постов нет</div>
+                <div className="No_sort">No posts</div>
             )}
         </div>
     );
